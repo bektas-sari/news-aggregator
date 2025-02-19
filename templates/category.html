@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News Aggregator - Categories</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container mt-4">
+    <h1 class="mb-4">{{ source_name }} Categories</h1>
+    <div class="list-group">
+      {% for category in categories %}
+        <a href="{{ url_for('news_list', source=source_key, category=category.name) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          {{ category.name }}
+          <span class="badge badge-primary badge-pill">{{ category.count }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

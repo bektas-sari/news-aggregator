@@ -1,0 +1,66 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  h1 {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Card Animation */
+  .card {
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Form Selects */
+  .form-select {
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+/* Modern headline style */
+.modern-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    color: #0859c2;
+    text-transform: capitalize;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Optional: Underline animation on hover */
+  .modern-title a {
+    position: relative;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+  
+  .modern-title a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background-color: #007bff;
+    transition: width 0.3s ease;
+  }
+  
+  .modern-title a:hover::after {
+    width: 100%;
+  }
+  
+  .modern-title a:hover {
+    color: #007bff;
+  }
+    

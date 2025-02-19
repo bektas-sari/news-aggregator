@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>News Aggregator</title>
+        <!-- Google Fonts: Roboto -->
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+        <!-- Bootstrap 5 -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      </head>
+      
+<body>
+  <div class="container py-5">
+    <h1 class="text-center mb-4">📰 News Aggregator</h1>
+    <div class="row">
+      <!-- Sidebar for Filtering -->
+      <div class="col-md-3">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Filters</h5>
+            <form id="filterForm" method="get" action="/">
+              <!-- News Source Filter -->
+              <div class="mb-3">
+                <label for="sourceSelect" class="form-label">News Source</label>
+                <select id="sourceSelect" name="source" class="form-select">
+                  <option value="All" {% if selected_source == "All" %}selected{% endif %}>All</option>
+                  {% for source in news_sources %}
+                  <option value="{{ source }}" {% if selected_source == source %}selected{% endif %}>{{ source }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <!-- Category Filter -->
+              <div class="mb-3">
+                <label for="categorySelect" class="form-label">Category</label>
+                <select id="categorySelect" name="category" class="form-select">
+                  <option value="All" {% if selected_category == "All" %}selected{% endif %}>All</option>
+                  {% for category in categories %}
+                  <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>{{ category }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <!-- Search Field -->
+              <div class="mb-3">
+                <label for="searchInput" class="form-label">Search</label>
+                <input type="text" id="searchInput" name="q" class="form-control" placeholder="Enter keywords" value="{{ search_query }}">
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Main Content: News Articles -->
+      <div class="col-md-9">
+        <div id="articlesContainer" class="row">
+          {% for article in articles %}
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title modern-title">
+                    <a href="{{ article.link }}" target="_blank" class="text-decoration-none">{{ article.title }}</a>
+                  </h5>                  
+                <p class="card-text">{{ article.summary[:100] }}...</p>
+                <p class="text-muted small">Published: {{ article.published }}</p>
+                <p class="text-muted small">Source: {{ article.source }}</p>
+                <p class="text-muted small">Category: {{ article.category }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- AJAX for Real-time Updates -->
+  <script>
+    // Function to fetch latest articles using AJAX
+    function fetchLatestArticles() {
+      // Get current filter parameters from the form
+      const form = document.getElementById('filterForm');
+      const formData = new FormData(form);
+      const params = new URLSearchParams(formData);
+      
+      fetch('/api/news?' + params.toString())
+        .then(response => response.json())
+        .then(data => {
+          // Update articlesContainer with new articles
+          const container = document.getElementById('articlesContainer');
+          container.innerHTML = '';
+          data.forEach(article => {
+            const colDiv = document.createElement('div');
+            colDiv.className = 'col-md-6 col-lg-4 mb-4';
+            colDiv.innerHTML = `
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="${article.link}" target="_blank" class="text-decoration-none">${article.title}</a>
+                  </h5>
+                  <p class="card-text">${article.summary.substring(0, 100)}...</p>
+                  <p class="text-muted small">Published: ${article.published}</p>
+                  <p class="text-muted small">Source: ${article.source}</p>
+                  <p class="text-muted small">Category: ${article.category}</p>
+                </div>
+              </div>
+            `;
+            container.appendChild(colDiv);
+          });
+        })
+        .catch(error => console.error('Error fetching articles:', error));
+    }
+
+    // Fetch articles every 30 seconds for real-time updates
+    setInterval(fetchLatestArticles, 30000);
+  </script>
+</body>
+</html>
