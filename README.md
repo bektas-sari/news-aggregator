@@ -42,10 +42,14 @@ This project is intended to serve as both a practical news aggregation tool and 
    ```
 6. **Visit:** [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
-## Contact
-- **GitHub:** [bektas-sari](https://github.com/bektas-sari)
-- **Email:** [bektas.sari@gmail.com](mailto:bektas.sari@gmail.com)
-- **LinkedIn:** [bektas-sari](https://www.linkedin.com/in/bektas-sari)
+## 👤 Developer
+
+**Bektas Sari**  
+Email: bektas.sari@gmail.com  <br>
+GitHub: https://github.com/bektas-sari <br>
+LinkedIn: www.linkedin.com/in/bektas-sari <br>
+Researchgate: https://www.researchgate.net/profile/Bektas-Sari-3 <br>
+Academia: https://independent.academia.edu/bektassari <br>
 
 ## License
 This project is licensed under the MIT License.
